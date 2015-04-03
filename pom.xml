@@ -1,0 +1,183 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.baidu</groupId>
+	<artifactId>bcssdk</artifactId>
+	<packaging>jar</packaging>
+	<version>1.4.5-SNAPSHOT</version>
+	<name>bcssdk</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<github.com.site-maven-plugin.version>0.11</github.com.site-maven-plugin.version>
+		<!-- github server corresponds to entry in ~/.m2/settings.xml -->
+		<github.global.server>github</github.global.server>
+		<!-- building with utf-8 encoding for across system environment, see http://www.oschina.net/question/158170_29408 -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<distributionManagement>
+		<repository>
+			<id>llv23-baidubcssdk-repository</id>
+			<name>llv23's baidu bcs sdk repository</name>
+			<!-- <url>file://${project.basedir}/../repository/releases</url> -->
+			<url>file://${project.build.directory}/releases</url>
+		</repository>
+	</distributionManagement>
+	<dependencies>
+		<!-- bcs dependencies -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/org.apache.httpcomponents/httpcore/4.1 -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpcore</artifactId>
+			<version>4.1</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/net.sf.flexjson/flexjson/2.1 -->
+		<dependency>
+			<groupId>net.sf.flexjson</groupId>
+			<artifactId>flexjson</artifactId>
+			<version>2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<!-- http://maven.apache.org/guides/getting-started/index.html#How_do_I_add_resources_to_my_JAR -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<!-- http://stackoverflow.com/questions/16723533/modify-pom-xml-to-include-jdk-compiler-version -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<!-- or whatever version you use -->
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+
+			<!-- Maven Surefire Plugin, see http://maven.apache.org/surefire/maven-surefire-plugin/examples/junit.html -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.18.1</version>
+				<configuration>
+					<groups>com.baidu.llv23.test.category.LocalCloudBCSInterface</groups>
+					<forkCount>0</forkCount>
+					<parallel>classes</parallel>
+					<threadCount>10</threadCount>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.18.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
+			<!-- http://stackoverflow.com/questions/4725668/how-to-deploy-snapshot-with-sources-and-javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- see issue of javadoc, http://mail-archives.apache.org/mod_mbox/ant-user/200305.mbox/%3COE410Xn2Pi1Y7PeGbPn0001a74f@hotmail.com%3E -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
+				<version>2.10.1</version> <executions> <execution> <id>attach-javadocs</id> 
+				<phase>deploy</phase> <goals><goal>jar</goal></goals> </execution> </executions> 
+				</plugin> -->
+			<plugin>
+				<!-- see more about https://github.com/JakeWharton/github-deploy-maven-plugin/blob/master/pom.xml -->
+				<!-- http://stackoverflow.com/questions/15537165/maven-deployment-parameters-in-pom-xml -->
+				<!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-deploy-plugin/2.8.2 -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+				<configuration>
+					<!-- <altDeploymentRepository>internal.repo::default::file://${project.basedir}/../repository/releases</altDeploymentRepository> -->
+					<altDeploymentRepository>internal.repo::default::file://${project.build.directory}/releases</altDeploymentRepository>
+				</configuration>
+				<executions>
+					<execution>
+						<id>deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.github.github</groupId>
+				<!-- http://mvnrepository.com/artifact/com.github.github/site-maven-plugin -->
+				<!-- http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-site-plugin -->
+				<artifactId>site-maven-plugin</artifactId>
+				<version>${github.com.site-maven-plugin.version}</version>
+				<configuration>
+					<!-- git commit message -->
+					<message>Maven artifacts for ${project.version}</message>
+					<!-- disable webpage processing -->
+					<noJekyll>true</noJekyll>
+					<!-- matches distribution management repository url above -->
+					<outputDirectory>${project.build.directory}/releases</outputDirectory>
+					<!-- remote branch name -->
+					<branch>refs/heads/releases</branch>
+					<includes>
+						<include>**/*</include>
+					</includes>
+					<!-- github repo name -->
+					<repositoryName>baidu_bcs_sdk_java</repositoryName>
+					<!-- github username -->
+					<repositoryOwner>llv22</repositoryOwner>
+				</configuration>
+				<executions>
+					<!-- run site-maven-plugin's 'site' target as part of the build's normal 
+						'deploy' phase -->
+					<execution>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<phase>deploy</phase>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
