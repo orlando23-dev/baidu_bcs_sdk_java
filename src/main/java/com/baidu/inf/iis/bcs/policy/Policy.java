@@ -72,7 +72,7 @@
 /*  78 */     this.originalJsonStr = paramString;
 /*  79 */     JSONDeserializer localJSONDeserializer = new JSONDeserializer();
 /*  80 */     HashMap localHashMap1 = (HashMap)localJSONDeserializer.deserialize(paramString);
-/*  81 */     ArrayList localArrayList = (ArrayList)localHashMap1.get("statements");
+/*  81 */     ArrayList<HashMap> localArrayList = (ArrayList<HashMap>)localHashMap1.get("statements");
 /*     */ 
 /*  83 */     for (HashMap localHashMap2 : localArrayList) {
 /*  84 */       Statement localStatement = new Statement();
@@ -81,6 +81,7 @@
 /*  87 */         localStatement.addAction(PolicyAction.toPolicyAction((String)localObject2));
 /*     */       }
 /*  90 */       Object localObject2;
+Iterator localObject1;
 /*  90 */       for (localObject1 = ((ArrayList)localHashMap2.get("user")).iterator(); ((Iterator)localObject1).hasNext(); ) { localObject2 = (String)((Iterator)localObject1).next();
 /*  91 */         localStatement.addUser((String)localObject2);
 /*     */       }
@@ -92,7 +93,7 @@
 /*  98 */       localStatement.setEffect(PolicyEffect.valueOf((String)localHashMap2.get("effect")));
 /*     */       Object localObject3;
 /* 100 */       if (null != localHashMap2.get("time")) {
-/* 101 */         localObject1 = new PolicyTime();
+/* 101 */         localObject1 = (Iterator) new PolicyTime();
 /* 102 */         for (localObject2 = ((ArrayList)localHashMap2.get("time")).iterator(); ((Iterator)localObject2).hasNext(); ) { localObject3 = ((Iterator)localObject2).next();
 /* 103 */           if ((localObject3 instanceof String))
 /* 104 */             ((PolicyTime)localObject1).addSingleTime((String)localObject3);
@@ -106,7 +107,7 @@
 /*     */       }
 /*     */ 
 /* 114 */       if (null != localHashMap2.get("ip")) {
-/* 115 */         localObject1 = new PolicyIP();
+/* 115 */         localObject1 = (Iterator) new PolicyIP();
 /* 116 */         for (localObject2 = ((ArrayList)localHashMap2.get("ip")).iterator(); ((Iterator)localObject2).hasNext(); ) { localObject3 = ((Iterator)localObject2).next();
 /* 117 */           if ((localObject3 instanceof String)) {
 /* 118 */             if (((String)localObject3).indexOf("/") != -1)
@@ -156,7 +157,7 @@
 /* 162 */       localHashMap2.put("resource", localStatement.getResource());
 /*     */ 
 /* 164 */       ArrayList localArrayList = new ArrayList();
-/* 165 */       for (Object localObject1 = localStatement.getAction().iterator(); ((Iterator)localObject1).hasNext(); ) { localObject2 = (PolicyAction)((Iterator)localObject1).next();
+/* 165 */       for (Object localObject1 = localStatement.getAction().iterator(); ((Iterator)localObject1).hasNext(); ) { PolicyAction localObject2 = (PolicyAction)((Iterator)localObject1).next();
 /* 166 */         localArrayList.add(((PolicyAction)localObject2).toString());
 /*     */       }
 /*     */       Object localObject2;
@@ -164,6 +165,7 @@
 /*     */ 
 /* 170 */       localHashMap2.put("effect", localStatement.getEffect().toString());
 /*     */       Pair localPair;
+ArrayList localObject1;
 /* 172 */       if ((null != localStatement.getTime()) && (!localStatement.getTime().isEmpty())) {
 /* 173 */         localObject1 = new ArrayList();
 /* 174 */         ((List)localObject1).addAll(localStatement.getTime().getSingleTimeList());

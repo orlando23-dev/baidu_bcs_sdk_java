@@ -48,7 +48,9 @@
 /*      */ import com.baidu.inf.iis.bcs.utils.Constants;
 /*      */ import com.baidu.inf.iis.bcs.utils.Mimetypes;
 /*      */ import com.baidu.inf.iis.bcs.utils.ServiceUtils;
+
 /*      */ import flexjson.JSONSerializer;
+
 /*      */ import java.io.BufferedOutputStream;
 /*      */ import java.io.ByteArrayInputStream;
 /*      */ import java.io.File;
@@ -66,6 +68,7 @@
 /*      */ import java.util.Map;
 /*      */ import java.util.Map.Entry;
 /*      */ import java.util.Set;
+
 /*      */ import org.apache.commons.logging.Log;
 /*      */ import org.apache.commons.logging.LogFactory;
 /*      */ 
@@ -124,7 +127,7 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> copyObject(CopyObjectRequest paramCopyObjectRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws Throwable
 /*      */   {
 /*  210 */     assertParameterNotNull(paramCopyObjectRequest, "The request parameter can be null.");
 /*  211 */     assertParameterNotNull(paramCopyObjectRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -154,19 +157,19 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> copyObject(Resource paramResource1, Resource paramResource2)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws Throwable
 /*      */   {
 /*  259 */     return copyObject(new CopyObjectRequest(paramResource1, paramResource2));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> copyObject(Resource paramResource1, Resource paramResource2, ObjectMetadata paramObjectMetadata)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  285 */     return copyObject(new CopyObjectRequest(paramResource1, paramResource2, paramObjectMetadata));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> createBucket(CreateBucketRequest paramCreateBucketRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  313 */     assertParameterNotNull(paramCreateBucketRequest, "The request parameter can be null.");
 /*  314 */     assertParameterNotNull(paramCreateBucketRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -183,13 +186,13 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> createBucket(String paramString)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  352 */     return createBucket(new CreateBucketRequest(paramString));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> deleteBucket(DeleteBucketRequest paramDeleteBucketRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  375 */     assertParameterNotNull(paramDeleteBucketRequest, "The request parameter can be null.");
 /*  376 */     assertParameterNotNull(paramDeleteBucketRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -202,13 +205,13 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> deleteBucket(String paramString)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  405 */     return deleteBucket(new DeleteBucketRequest(paramString));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> deleteObject(DeleteObjectRequest paramDeleteObjectRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  428 */     assertParameterNotNull(paramDeleteObjectRequest, "The request parameter can be null.");
 /*  429 */     assertParameterNotNull(paramDeleteObjectRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -222,13 +225,13 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> deleteObject(String paramString1, String paramString2)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  460 */     return deleteObject(new DeleteObjectRequest(paramString1, paramString2));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Policy> getBucketPolicy(GetBucketPolicyRequest paramGetBucketPolicyRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  481 */     assertParameterNotNull(paramGetBucketPolicyRequest, "The request parameter can be null.");
 /*  482 */     assertParameterNotNull(paramGetBucketPolicyRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -243,13 +246,13 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Policy> getBucketPolicy(String paramString)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  511 */     return getBucketPolicy(new GetBucketPolicyRequest(paramString));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<DownloadObject> getObject(GetObjectRequest paramGetObjectRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  533 */     assertParameterNotNull(paramGetObjectRequest, "The request parameter can be null.");
 /*  534 */     assertParameterNotNull(paramGetObjectRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -270,7 +273,7 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<DownloadObject> getObject(GetObjectRequest paramGetObjectRequest, File paramFile)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  573 */     assertParameterNotNull(paramFile, "The destination file parameter must be specified when downloading an object directly to a file.");
 /*  574 */     BaiduBCSResponse localBaiduBCSResponse = getObject(paramGetObjectRequest);
@@ -314,26 +317,26 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<DownloadObject> getObject(String paramString1, String paramString2)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  634 */     return getObject(new GetObjectRequest(paramString1, paramString2));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> getObjectMetadata(GetObjectMetadataRequest paramGetObjectMetadataRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  657 */     BCSHttpRequest localBCSHttpRequest = createHttpRequest(paramGetObjectMetadataRequest);
 /*  658 */     return this.bcsHttpClient.execute(localBCSHttpRequest, new ObjectMetadataResponseHandler());
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> getObjectMetadata(String paramString1, String paramString2)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  681 */     return getObjectMetadata(new GetObjectMetadataRequest(paramString1, paramString2));
 /*      */   }
 /*      */ 
 /*      */   public boolean doesObjectExist(String paramString1, String paramString2)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*      */     try
 /*      */     {
@@ -350,7 +353,7 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Policy> getObjectPolicy(GetObjectPolicyRequest paramGetObjectPolicyRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  735 */     assertParameterNotNull(paramGetObjectPolicyRequest, "The request parameter can be null.");
 /*  736 */     assertParameterNotNull(paramGetObjectPolicyRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -366,13 +369,13 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Policy> getObjectPolicy(String paramString1, String paramString2)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  768 */     return getObjectPolicy(new GetObjectPolicyRequest(paramString1, paramString2));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<List<BucketSummary>> listBucket(ListBucketRequest paramListBucketRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  790 */     assertParameterNotNull(paramListBucketRequest, "The request parameter can be null.");
 /*  791 */     assertParameterNotNull(paramListBucketRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -383,7 +386,7 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectListing> listObject(ListObjectRequest paramListObjectRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  818 */     assertParameterNotNull(paramListObjectRequest, "The request parameter can be null.");
 /*  819 */     assertParameterNotNull(paramListObjectRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -412,7 +415,7 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> putBucketPolicy(PutBucketPolicyRequest paramPutBucketPolicyRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  864 */     assertParameterNotNull(paramPutBucketPolicyRequest, "The request parameter can be null.");
 /*  865 */     assertParameterNotNull(paramPutBucketPolicyRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -440,19 +443,19 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> putBucketPolicy(String paramString, Policy paramPolicy)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  913 */     return putBucketPolicy(new PutBucketPolicyRequest(paramString, paramPolicy));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> putBucketPolicy(String paramString, X_BS_ACL paramX_BS_ACL)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  936 */     return putBucketPolicy(new PutBucketPolicyRequest(paramString, paramX_BS_ACL));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> putObject(PutObjectRequest paramPutObjectRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /*  958 */     assertParameterNotNull(paramPutObjectRequest, "The request parameter can be null.");
 /*  959 */     assertParameterNotNull(paramPutObjectRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -544,19 +547,19 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> putObject(String paramString1, String paramString2, File paramFile)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1071 */     return putObject(new PutObjectRequest(paramString1, paramString2, paramFile));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> putObject(String paramString1, String paramString2, InputStream paramInputStream, ObjectMetadata paramObjectMetadata)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1097 */     return putObject(new PutObjectRequest(paramString1, paramString2, paramInputStream, paramObjectMetadata));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> putObjectPolicy(PutObjectPolicyRequest paramPutObjectPolicyRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1119 */     assertParameterNotNull(paramPutObjectPolicyRequest, "The request parameter can be null.");
 /* 1120 */     assertParameterNotNull(paramPutObjectPolicyRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -587,19 +590,19 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> putObjectPolicy(String paramString1, String paramString2, Policy paramPolicy)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1170 */     return putObjectPolicy(new PutObjectPolicyRequest(paramString1, paramString2, paramPolicy));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> putObjectPolicy(String paramString1, String paramString2, X_BS_ACL paramX_BS_ACL)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1194 */     return putObjectPolicy(new PutObjectPolicyRequest(paramString1, paramString2, paramX_BS_ACL));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> putSuperfile(PutSuperfileRequest paramPutSuperfileRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1216 */     assertParameterNotNull(paramPutSuperfileRequest, "The request parameter can be null.");
 /* 1217 */     assertParameterNotNull(paramPutSuperfileRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -632,19 +635,19 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> putSuperfile(String paramString1, String paramString2, List<SuperfileSubObject> paramList)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1269 */     return putSuperfile(new PutSuperfileRequest(paramString1, paramString2, paramList));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<ObjectMetadata> putSuperfile(String paramString1, String paramString2, ObjectMetadata paramObjectMetadata, List<SuperfileSubObject> paramList)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1295 */     return putSuperfile(new PutSuperfileRequest(paramString1, paramString2, paramObjectMetadata, paramList));
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> setObjectMetadata(SetObjectMetadataRequest paramSetObjectMetadataRequest)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1319 */     assertParameterNotNull(paramSetObjectMetadataRequest, "The request parameter can be null.");
 /* 1320 */     assertParameterNotNull(paramSetObjectMetadataRequest.getHttpMethod(), "The http method parameter in Request must be specified.");
@@ -666,7 +669,7 @@
 /*      */   }
 /*      */ 
 /*      */   public BaiduBCSResponse<Empty> setObjectMetadata(String paramString1, String paramString2, ObjectMetadata paramObjectMetadata)
-/*      */     throws BCSClientException, BCSServiceException
+/*      */     throws BCSClientException, BCSServiceException, Throwable
 /*      */   {
 /* 1362 */     return setObjectMetadata(new SetObjectMetadataRequest(paramString1, paramString2, paramObjectMetadata));
 /*      */   }
