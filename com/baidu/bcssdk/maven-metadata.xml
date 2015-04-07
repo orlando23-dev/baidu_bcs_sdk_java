@@ -4,8 +4,8 @@
   <artifactId>bcssdk</artifactId>
   <versioning>
     <versions>
-      <version>1.4.5-SNAPSHOT</version>
+      <version>0.8.1-SNAPSHOT</version>
     </versions>
-    <lastUpdated>20150403105703</lastUpdated>
+    <lastUpdated>20150407051936</lastUpdated>
   </versioning>
 </metadata>
