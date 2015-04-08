@@ -146,7 +146,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
 				<configuration>
-					<groups>com.baidu.llv23.test.category.LocalCloudBCSInterface</groups>
+					<groups>com.baidubce.test.category.IContestStorageTest</groups>
 					<forkCount>0</forkCount>
 					<parallel>classes</parallel>
 					<threadCount>10</threadCount>
