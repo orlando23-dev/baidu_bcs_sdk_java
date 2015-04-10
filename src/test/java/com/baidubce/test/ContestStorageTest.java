@@ -21,7 +21,7 @@ import com.baidubce.services.bos.BosClientConfiguration;
 
 /**
  * @author llv23
- *
+ * @see how-to store pdf template information into bcs bucket
  */
 public class ContestStorageTest {
 
@@ -34,18 +34,15 @@ public class ContestStorageTest {
 
 	/**
 	 * @throws MalformedURLException
-	 * @see reference in
-	 *      http://console.bce.baidu.com/doc/#/doc/product~serviceType
-	 *      =BOS&file=Java-SDK
+	 * @see reference in 
+	 *      http://console.bce.baidu.com/doc/#/doc/product~serviceType=BOS&file=Java-SDK
 	 * @see client.putObject 1, File 2, FileStream 3, byte[] 4, String
-	 * @see try-resource
-	 *      https://docs.oracle.com/javase/tutorial/essential/exceptions
-	 *      /tryResourceClose.html
+	 * @see try-resource in 
+	 *      https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
 	 */
 	@Test
 	@Category(com.baidubce.test.category.IContestStorageTest.class)
-	public void testContestStoreOperation() throws MalformedURLException,
-			IOException {
+	public void testContestStoreOperation() throws MalformedURLException, IOException {
 		String ACCESS_KEY_ID = System.getProperty(APIKEY);
 		String SECRET_ACCESS_KEY = System.getProperty(ACCESSKEY);
 		BosClientConfiguration config = new BosClientConfiguration();
@@ -61,8 +58,7 @@ public class ContestStorageTest {
 				throw ex;
 			}
 		}
-		config.setCredentials(new DefaultBceCredentials(ACCESS_KEY_ID,
-				SECRET_ACCESS_KEY));
+		config.setCredentials(new DefaultBceCredentials(ACCESS_KEY_ID, SECRET_ACCESS_KEY));
 		config.setMaxConnections(10);
 		config.setConnectionTimeoutInMillis(5000);
 		config.setSocketTimeoutInMillis(2000);
@@ -71,8 +67,7 @@ public class ContestStorageTest {
 		boolean exists = client.doesBucketExist(bucketName);
 		Assert.assertEquals(String.format("bucket (%s) must exist", bucketName), exists, true);
 		URL requestStreamUrl = new URL(String.format(challengeUrlFormat, challengeId, challengeType));
-		HttpURLConnection urlConn = (HttpURLConnection) requestStreamUrl
-				.openConnection();
+		HttpURLConnection urlConn = (HttpURLConnection) requestStreamUrl.openConnection();
 		try (InputStream in = urlConn.getInputStream()) {
 			try (BufferedReader br = new BufferedReader(new InputStreamReader(in))) {
 				String line = "";
