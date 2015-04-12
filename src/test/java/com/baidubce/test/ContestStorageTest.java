@@ -3,14 +3,17 @@
  */
 package com.baidubce.test;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Collector;
+import org.jsoup.select.Elements;
+import org.jsoup.select.Evaluator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -28,9 +31,11 @@ public class ContestStorageTest {
 	static String APIKEY = "APIKEY";
 	static String ACCESSKEY = "ACCESSKEY";
 	static String bucketName = "tcnotify-storage";
+	// see url https://www.topcoder.com/challenge-details/30049526/?type=develop
 	static String challengeUrlFormat = "https://www.topcoder.com/challenge-details/%s/?type=%s";
 	static String challengeId = "30049526";
 	static String challengeType = "develop";
+	static String contestOverviewId = "contest-overview";
 
 	/**
 	 * @throws MalformedURLException
@@ -66,6 +71,8 @@ public class ContestStorageTest {
 		BosClient client = new BosClient(config);
 		boolean exists = client.doesBucketExist(bucketName);
 		Assert.assertEquals(String.format("bucket (%s) must exist", bucketName), exists, true);
+		/**
+		 * streaming to fetch contest content
 		URL requestStreamUrl = new URL(String.format(challengeUrlFormat, challengeId, challengeType));
 		HttpURLConnection urlConn = (HttpURLConnection) requestStreamUrl.openConnection();
 		try (InputStream in = urlConn.getInputStream()) {
@@ -75,6 +82,39 @@ public class ContestStorageTest {
 					System.out.println(line);
 				}
 			}
+		}
+		 */
+		// see : start-tag in html
+		// <div ng-if="!CD.isDesign" id="contest-overview" class="tableWrap  tab">
+		// </div>
+		Document docContest = Jsoup.connect(String.format(challengeUrlFormat, challengeId, challengeType)).get();
+		Elements elementsContest = Collector.collect(new Evaluator.Id(contestOverviewId), docContest);
+		// see : only design and nondesign contests
+		assert(elementsContest.size() == 2);
+		// see : parse elemContest for core content to Map<String, String>
+		Map<String, Element> coreContents = new HashMap<String, Element>();
+		for(Element element: elementsContest) {
+			String keyforContestType = element.attr("ng-if");
+			if(keyforContestType.equalsIgnoreCase("!CD.isDesign")) {
+				coreContents.put("nondesign", element);
+			}
+			else if(keyforContestType.equalsIgnoreCase("CD.isDesign")) {
+				coreContents.put("design", element);
+			}
+		}
+		Element targetElement = null;
+		// see get html content of design/develop contest 
+		if(challengeType.equalsIgnoreCase("design")) {
+			targetElement = coreContents.get("design");
+		}
+		else {
+			targetElement = coreContents.get("nondesign");
+		}
+		assert(targetElement != null);
+		//TODO : parse develop
+		Elements metasContest = docContest.select("meta");
+		for(Element metaElement : metasContest) {
+			System.out.println(metaElement);
 		}
 	}
 }
