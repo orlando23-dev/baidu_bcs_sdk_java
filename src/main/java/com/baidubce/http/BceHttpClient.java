@@ -14,16 +14,12 @@ package com.baidubce.http;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import com.baidubce.BceClientConfiguration;
-import com.baidubce.BceClientException;
-import com.baidubce.BceServiceException;
-import com.baidubce.Protocol;
-import com.baidubce.auth.BceCredentials;
-import com.baidubce.auth.Signer;
-import com.baidubce.http.handler.HttpResponseHandler;
-import com.baidubce.internal.InternalRequest;
-import com.baidubce.model.AbstractBceResponse;
-import com.baidubce.util.HttpUtils;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Map.Entry;
+import java.util.concurrent.Future;
+
+import javax.net.ssl.SSLContext;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpEntityEnclosingRequest;
@@ -76,12 +72,15 @@ import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.SSLContext;
-
-import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Map.Entry;
-import java.util.concurrent.Future;
+import com.baidubce.BceClientConfiguration;
+import com.baidubce.BceClientException;
+import com.baidubce.Protocol;
+import com.baidubce.auth.BceCredentials;
+import com.baidubce.auth.Signer;
+import com.baidubce.http.handler.HttpResponseHandler;
+import com.baidubce.internal.InternalRequest;
+import com.baidubce.model.AbstractBceResponse;
+import com.baidubce.util.HttpUtils;
 
 @ThreadSafe
 public class BceHttpClient {

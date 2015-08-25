@@ -140,9 +140,11 @@
 		</resources>
 		<plugins>
 			<!-- http://stackoverflow.com/questions/16723533/modify-pom-xml-to-include-jdk-compiler-version -->
+			<!-- building version - http://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
 				<configuration>
 					<!-- or whatever version you use -->
 					<source>1.7</source>
@@ -156,6 +158,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.18.1</version>
 				<configuration>
+					<useSystemClassLoader>false</useSystemClassLoader>
 					<groups>com.baidubce.test.category.IContestStorageTest</groups>
 					<forkCount>0</forkCount>
 					<parallel>classes</parallel>

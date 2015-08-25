@@ -3,10 +3,12 @@
  */
 package com.baidubce.test;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,8 +30,8 @@ import com.baidubce.services.bos.BosClientConfiguration;
  */
 public class ContestStorageTest {
 
-	static String APIKEY = "APIKEY";
-	static String ACCESSKEY = "ACCESSKEY";
+	static String APIKEY = "appidKey";
+	static String ACCESSKEY = "secretKey";
 	static String bucketName = "tcnotify-storage";
 	// see url https://www.topcoder.com/challenge-details/30049526/?type=develop
 	static String challengeUrlFormat = "https://www.topcoder.com/challenge-details/%s/?type=%s";
@@ -48,6 +50,11 @@ public class ContestStorageTest {
 	@Test
 	@Category(com.baidubce.test.category.IContestStorageTest.class)
 	public void testContestStoreOperation() throws MalformedURLException, IOException {
+		Properties defaultProps = new Properties();
+		try(FileInputStream in = new FileInputStream("src/main/resources/META-INF/application.properties")){
+			defaultProps.load(in);
+		}
+		
 		String ACCESS_KEY_ID = System.getProperty(APIKEY);
 		String SECRET_ACCESS_KEY = System.getProperty(ACCESSKEY);
 		BosClientConfiguration config = new BosClientConfiguration();

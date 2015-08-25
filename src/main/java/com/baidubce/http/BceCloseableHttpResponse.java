@@ -12,6 +12,9 @@
  */
 package com.baidubce.http;
 
+import java.io.IOException;
+import java.util.Locale;
+
 import org.apache.http.Header;
 import org.apache.http.HeaderIterator;
 import org.apache.http.HttpEntity;
@@ -21,12 +24,10 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.params.HttpParams;
 
-import java.io.IOException;
-import java.util.Locale;
-
 /**
  * The implement from interface CloseableHttpResponse.
  */
+@SuppressWarnings("deprecation")
 public class BceCloseableHttpResponse implements CloseableHttpResponse {
     private final HttpResponse original;
 

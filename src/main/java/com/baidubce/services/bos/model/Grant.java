@@ -12,8 +12,6 @@
  */
 package com.baidubce.services.bos.model;
 
-import com.baidubce.model.User;
-
 import java.util.List;
 
 /**

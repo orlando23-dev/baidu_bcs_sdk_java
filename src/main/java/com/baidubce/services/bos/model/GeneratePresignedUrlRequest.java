@@ -12,13 +12,12 @@
  */
 package com.baidubce.services.bos.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.baidubce.auth.BceCredentials;
 import com.baidubce.http.HttpMethodName;
 import com.baidubce.model.AbstractBceRequest;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Contains options to generate a pre-signed URL for an Baidu BOS resource.

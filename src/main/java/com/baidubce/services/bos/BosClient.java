@@ -30,7 +30,6 @@ import com.baidubce.model.AbstractBceRequest;
 import com.baidubce.model.User;
 import com.baidubce.services.bos.model.*;
 import com.baidubce.util.*;
-import com.baidubce.util.HttpUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.google.common.collect.Lists;
 
@@ -254,7 +253,8 @@ public class BosClient extends AbstractBceClient {
      * @param request The request containing the name of the bucket whose ACL is being retrieved.
      * @return The <code>GetBuckeetAclResponse</code> for the specified Bos bucket.
      */
-    public GetBucketAclResponse getBucketAcl(GetBucketAclRequest request) {
+    @SuppressWarnings("static-access")
+	public GetBucketAclResponse getBucketAcl(GetBucketAclRequest request) {
         checkNotNull(request, "request should not be null.");
 
         InternalRequest internalRequest = this.createRequest(request, HttpMethodName.GET);
@@ -411,7 +411,8 @@ public class BosClient extends AbstractBceClient {
      *     used to allow anyone to download the specified object from Bos,
      *     without exposing the owner's Bce secret access key.
      */
-    public URL generatePresignedUrl(GeneratePresignedUrlRequest request) {
+    @SuppressWarnings("static-access")
+	public URL generatePresignedUrl(GeneratePresignedUrlRequest request) {
         checkNotNull(request, "The request parameter must be specified when generating a pre-signed URL");
 
         HttpMethodName httpMethod = HttpMethodName.valueOf(request.getMethod().toString());
