@@ -41,11 +41,9 @@ public class ContestStorageTest {
 
 	/**
 	 * @throws MalformedURLException
-	 * @see reference in 
-	 *      http://console.bce.baidu.com/doc/#/doc/product~serviceType=BOS&file=Java-SDK
+	 * @see reference in http://console.bce.baidu.com/doc/#/doc/product~serviceType=BOS&file=Java-SDK
 	 * @see client.putObject 1, File 2, FileStream 3, byte[] 4, String
-	 * @see try-resource in 
-	 *      https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
+	 * @see try-resource in https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html
 	 */
 	@Test
 	@Category(com.baidubce.test.category.IContestStorageTest.class)
