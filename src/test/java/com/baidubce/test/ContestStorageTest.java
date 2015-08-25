@@ -69,7 +69,7 @@ public class ContestStorageTest {
 			}
 		}
 		config.setCredentials(new DefaultBceCredentials(ACCESS_KEY_ID, SECRET_ACCESS_KEY));
-		config.setMaxConnections(10);
+		config.setMaxConnections(5);
 		config.setConnectionTimeoutInMillis(5000);
 		config.setSocketTimeoutInMillis(2000);
 
