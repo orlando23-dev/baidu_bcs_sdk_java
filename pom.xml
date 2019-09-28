@@ -18,12 +18,12 @@
 		<repository>
 			<id>mynexusdeployment</id>
 			<name>Internal Releases</name>
-			<url>http://123.57.249.151:8081/nexus/content/repositories/bae3local/</url>
+			<url>http://123.57.249.151:8088/nexus/content/repositories/bae3local/</url>
 		</repository>
 		<snapshotRepository>
 			<id>mynexusdeployment</id>
 			<name>Internal Snapshots</name>
-			<url>http://123.57.249.151:8081/nexus/content/repositories/bae3localsnapshots/</url>
+			<url>http://123.57.249.151:8088/nexus/content/repositories/bae3localsnapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<dependencies>
